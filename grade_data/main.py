@@ -4,13 +4,13 @@
 grade-data
 ==========
 
-A script for processing ELD grades from .csv files. This script does not focus
+A script for processing ELD grades from .csv files.  This script does not focus
 on individual student progress, but plots overall classroom trends.
 
 The program reads a previously downloaded gradebook spreadsheet then converts
 'number +/-' scores, standards based scores, and 'missing' or 'excused' values
-to numeric values. Afterwards, scores will be processed so that growth data can
-be observed via plotting. Also, program assumes input is .csv since this is the
+to numeric values.  Afterwards, scores will be processed so that growth data can
+be observed via plotting.  Also, program assumes input is .csv since this is the
 only file download format available.
 """
 
@@ -33,7 +33,7 @@ now = time.strftime("%Y-%m-%d %H:%M")
 def clean_data():
     '''
     Function cleans up data by stripping header lines, student names, and
-    converting grades to numeric values. Returns a data frame ready to plot.
+    converting grades to numeric values.  Returns a data frame ready to plot.
     '''
     # Eliminate header rows and remove column 0 which contains student names.
     df = pd.read_csv(import_csv, skiprows=2, header=None)
@@ -60,12 +60,14 @@ def clean_data():
     # Convert all dataframe values to float = clean dataframe
     df_clean = df.astype(float)
     return df_clean
+
 def calculate_column_mean(df_clean):
     '''
     Calculate mean of each column (mean of each assignment's scores) and return.
     '''
     df_mean = df_clean.mean(axis=0)
     return df_mean
+
 def plot_df(df_mean):
     '''
     Plot the mean.
