@@ -44,7 +44,7 @@ def clean_data():
     # Drop columns if all values are NaN (i.e. no grades were entered)
     df_drop_col = df_drop_names.dropna(axis=1, how='all')
     # Replace "excused" and "missing" values with NaN.
-    df_no_excuse = df_drop_col.replace(("e", "m"), "NaN", regex=True)
+    df_no_excuse = df_drop_col.replace(("e", "m", "E", "M"), "NaN", regex=True)
     # Convert standards based grades (u, pp, p, a) to numerical grade based on
     # classroom language level.
     to_replace = ('u', 'pp', 'p', 'a')
