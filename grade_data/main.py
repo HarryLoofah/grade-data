@@ -23,7 +23,7 @@ IMPORT_CSV = raw_input("Enter the name of the .csv file to import: ")
 LANG_LEVEL = raw_input("Enter language level (single number) for class: ")
 TEACHER_NAME = raw_input("Enter teacher's name or initials: ")
 TIME = datetime.datetime.now()
-NOW = TIME.strftime("%Y-%m-%d %I:%M")
+NOW = TIME.strftime("%m-%d-%Y")
 
 
 def clean_data():
@@ -54,18 +54,15 @@ def clean_data():
     pm_values = (1.3, 1.7, 2.3, 2.7, 3.3, 3.7, 4.3, 4.7, 5.3, 5.7)
     dataframe = dataframe.replace(pm_replace, pm_values, regex=True)
 
+    # Convert dataframe values to float.
     dataframe = dataframe.astype(float)
+    # Find the mean value of all columns.
+    clean_dataframe = dataframe.mean(axis=0)
 
-    return dataframe
-
-
-def calculate_column_mean(dataframe):
-    """Before creating plot, find mean score for each column."""
-    df_mean = dataframe.mean(axis=0)
-    return df_mean
+    return clean_dataframe
 
 
-def plot_df(df_mean):
+def main(clean_dataframe):
     """Plot the data."""
     font = {
         'family':    'sans',
@@ -74,8 +71,8 @@ def plot_df(df_mean):
         'size':       14
     }
 
-    df_mean.plot(kind='bar')
-    plt.title('Teacher: {} *** Created: {}'.format(TEACHER_NAME, NOW))
+    clean_dataframe.plot(kind='bar')
+    plt.title('Teacher: {}  Created: {}'.format(TEACHER_NAME, NOW))
     plt.xlabel('Assignments', fontdict=font)
     plt.ylabel('Scores', fontdict=font)
 
@@ -83,6 +80,4 @@ def plot_df(df_mean):
 
 
 if __name__ == "__main__":
-    clean_data()
-    calculate_column_mean(clean_data())
-    plot_df(calculate_column_mean(clean_data()))
+    main(clean_data())
