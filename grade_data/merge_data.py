@@ -4,14 +4,11 @@
 merge_data.py
 =============
 
-A script for processing ELD grades from .csv files.  This script does not focus
-on individual student progress, but plots overall classroom trends.
+    This script merges a set of gradebook spreadsheets into a single .csv file
+    that can be used with grade-data's main.py. Assumes folder of spreadsheets
+    is stored in a directory other than 'grade_data'.
 
-The program merges a previously downloaded set of gradebook spreadsheets into a
-single .csv file that can be used with grade-data's main.py. Assumes folder of
-spreadsheets is store in a directory other than 'grade_data'.
+    :copyright: (c) 2015 by Greg Aitkenhead
+    :license: MIT
 """
-
-__version__ = "1.0"
-
 # imports
