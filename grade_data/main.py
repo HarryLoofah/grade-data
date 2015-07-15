@@ -67,10 +67,12 @@ def calculate_column_mean(dataframe):
 
 def plot_df(df_mean):
     """Plot the data."""
-    font = {'family': 'sans',
-            'color': 'darkred',
-            'weight': 'normal',
-            'size': 14}
+    font = {
+        'family':    'sans',
+        'color':     'darkred',
+        'weight':    'normal',
+        'size':       14
+    }
 
     df_mean.plot(kind='bar')
     plt.title('Teacher: {} *** Created: {}'.format(TEACHER_NAME, NOW))
