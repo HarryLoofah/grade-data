@@ -4,7 +4,7 @@
 grade-data
 ==========
 
-    This script processes ELD grades from .csv files and plots overall
+    This script processes ELD grades from CSV files and plots overall
     classroom trends.
 
     It converts 'number +/-' scores and standards based scores to numeric
@@ -19,19 +19,23 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Ask user for file and ID information and set current time (to use with plot).
-IMPORT_CSV = raw_input("Enter the name of the .csv file to import: ")
+IMPORT_CSV = raw_input("Enter the name of the CSV file to import: ")
 LANG_LEVEL = raw_input("Enter language level (single number) for class: ")
 TEACHER_NAME = raw_input("Enter teacher's name or initials: ")
 TIME = datetime.datetime.now()
 NOW = TIME.strftime("%m-%d-%Y")
 
+# Read in CSV file after user input.  The CSV files from the gradebook report
+# contain a top header row with assignment names followed by a row containing
+# all zeros.  It is easiest to remove these rows when reading in the CSV file.
+# All other manipulation of the dataframe will take place in 'clean_data()'.
+DF = pd.read_csv(IMPORT_CSV, skiprows=2, header=None)
 
-def clean_data():
+
+def clean_data(dataframe):
     """Cleans data by stripping header lines, student names, and converting
     various types of grades to numeric values.  Returns a plotable data frame.
     """
-    # Import .csv and eliminate header rows.
-    dataframe = pd.read_csv(IMPORT_CSV, skiprows=2, header=None)
     # Remove column 0 (which contains student names).
     dataframe = dataframe.drop(0, 1)
     # Drop columns if all values are NaN (i.e. no grades were entered).
@@ -57,13 +61,13 @@ def clean_data():
     # Convert dataframe values to float.
     dataframe = dataframe.astype(float)
     # Find the mean value of all columns.
-    clean_dataframe = dataframe.mean(axis=0)
+    dataframe = dataframe.mean(axis=0)
 
-    return clean_dataframe
+    return dataframe
 
 
-def main(clean_dataframe):
-    """Plot the data."""
+def main():
+    """Plot the data using output from clean_data()."""
     font = {
         'family':    'sans',
         'color':     'darkred',
@@ -71,6 +75,7 @@ def main(clean_dataframe):
         'size':       14
     }
 
+    clean_dataframe = clean_data(DF)
     clean_dataframe.plot(kind='bar')
     plt.title('Teacher: {}  Created: {}'.format(TEACHER_NAME, NOW))
     plt.xlabel('Assignments', fontdict=font)
@@ -80,4 +85,4 @@ def main(clean_dataframe):
 
 
 if __name__ == "__main__":
-    main(clean_data())
+    main()
