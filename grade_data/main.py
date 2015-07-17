@@ -78,7 +78,7 @@ def main():
         'size':       14
     }
 
-    # Create the plot.
+    # Plot the dataframe.
     clean_dataframe.plot(kind='bar')
     plt.title('Teacher: {}  Created: {}'.format(TEACHER_NAME, now))
     plt.xlabel('Assignments', fontdict=font)
