@@ -22,8 +22,6 @@ import pandas as pd
 IMPORT_CSV = raw_input("Enter the name of the CSV file to import: ")
 LANG_LEVEL = raw_input("Enter language level (single number) for class: ")
 TEACHER_NAME = raw_input("Enter teacher's name or initials: ")
-TIME = datetime.datetime.now()
-NOW = TIME.strftime("%m-%d-%Y")
 
 # Read in CSV file after user input.  The CSV files from the gradebook report
 # contain a top header row with assignment names followed by a row containing
@@ -68,6 +66,11 @@ def clean_data(dataframe):
 
 def main():
     """Plot the data using output from clean_data()."""
+    # Clean the dataframe to plot.
+    clean_dataframe = clean_data(DF)
+    # Get today's date for the plot title.
+    now = (datetime.datetime.now()).strftime("%m-%d-%Y")
+    # Set the font for plot x and y labels.
     font = {
         'family':    'sans',
         'color':     'darkred',
@@ -75,9 +78,9 @@ def main():
         'size':       14
     }
 
-    clean_dataframe = clean_data(DF)
+    # Create the plot.
     clean_dataframe.plot(kind='bar')
-    plt.title('Teacher: {}  Created: {}'.format(TEACHER_NAME, NOW))
+    plt.title('Teacher: {}  Created: {}'.format(TEACHER_NAME, now))
     plt.xlabel('Assignments', fontdict=font)
     plt.ylabel('Scores', fontdict=font)
 
